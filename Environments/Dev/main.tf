@@ -7,11 +7,15 @@ terraform {
     }
 }
 provider "aws" {
-    region = "eu-central-1"
+    region = var.region
 }
 
 resource "aws_instance" "example" {
     ami = "ami-00ad2436e75246bba"
-    instance_type = "t2.micro"
-    count = 2
+    instance_type = var.ec2_instance_type
+    count = var.number_of_instances
+}
+
+module "my_ec2_instance" {
+  source = "./new_module"
 }
