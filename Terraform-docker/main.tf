@@ -12,7 +12,7 @@ provider "docker" {
 }
 
 resource "docker_image" "nodered_image" {
-  name ="nodered/node-red:latest"
+  name ="patronix9345/nodered:latest"
   
 }
 
