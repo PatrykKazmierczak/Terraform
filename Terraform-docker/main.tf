@@ -9,57 +9,79 @@ terraform {
 
 provider "docker" {}
 
+resource "random_string" "random" {
+  length = 6
+  special = false
+  upper = false
+}
+
 resource "docker_container" "nodered_container" {
-  name  = "nodered-container"
+  name  = join("-",["nodered-container", random_string.random.result])
   image = "nodered/node-red:latest"
 
   ports {
     internal = 1880
-    external = 1880
+    #external = 1880 Docker will assign random external port
   }
 }
 
 resource "docker_container" "ubuntu_container" {
-  name  = "ubuntu-container"
+  name  = join("-",["ubuntu-container", random_string.random.result])
   image = "ubuntu:latest"
   command = ["sleep", "infinity"]
   ports {
     internal = 56899
-    external = 56899
+    #external = 56899 Docker will assign random external port
   }
 }
 
 resource "docker_container" "debian_container" {
-  name  = "debian-container"
+  name  = join("-",["debian-container", random_string.random.result])
   image = "debian:latest"
   command = ["sleep", "infinity"]
   ports {
     internal = 8908
-    external = 8908
+    #external = 8908 Docker will assign random external port
   }
 }
 
-
 resource "docker_container" "postgresql_container" {
-  name  = "postgresql-container"
+  name  = join("-",["postgresql-container", random_string.random.result])
   image = "postgres:latest"
   command = ["sleep", "infinity"]
   ports {
     internal = 5432
-    external = 5432
+    #external = 5432 Docker will assign random external port
   }
 }
 
 resource "docker_container" "jenkins_container" {
-  name  = "jenkins-container"
+  name  = join("-",["jenkins-container", random_string.random.result])
   image = "jenkins/jenkins:lts-jdk11"
   command = ["sleep", "infinity"]
   ports {
     internal = 9090
-    external = 9090
+    #external = 9090  Docker will assign random external port
   }
 }
 
-  
 
+output "Container-Name-Ip-ExternalPort" {
+  value = join("\n", [
+    join(": -> ", [docker_container.nodered_container.name, docker_container.nodered_container.network_data[0].ip_address, docker_container.nodered_container.ports[0].external]),
+    join(": -> ", [docker_container.ubuntu_container.name, docker_container.ubuntu_container.network_data[0].ip_address, docker_container.ubuntu_container.ports[0].external]),
+    join(": -> ", [docker_container.debian_container.name, docker_container.debian_container.network_data[0].ip_address, docker_container.debian_container.ports[0].external]),
+    join(": -> ", [docker_container.postgresql_container.name, docker_container.postgresql_container.network_data[0].ip_address, docker_container.postgresql_container.ports[0].external]),
+    join(": -> ", [docker_container.jenkins_container.name, docker_container.jenkins_container.network_data[0].ip_address, docker_container.jenkins_container.ports[0].external])
+  ])
+  description = "The names and network data of all containers"
+}
+
+
+
+
+
+
+
+  
 
