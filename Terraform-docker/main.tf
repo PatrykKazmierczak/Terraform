@@ -7,26 +7,11 @@ terraform {
   }
 }
 
-provider "docker" {
-  
-}
-
-resource "docker_image" "nodered_image" {
-  name = "nodered/node-red:latest"
-}
-
-resource "docker_image" "ubuntu_image" {
-  name = "ubuntu"
-
-  build {
-    dockerfile = "ubuntu.Dockerfile"
-    context    = "."
-  }
-}
+provider "docker" {}
 
 resource "docker_container" "nodered_container" {
-  name  = "nodered"
-  image = docker_image.nodered_image.image_id
+  name  = "nodered-container"
+  image = "nodered/node-red:latest"
 
   ports {
     internal = 1880
@@ -35,14 +20,46 @@ resource "docker_container" "nodered_container" {
 }
 
 resource "docker_container" "ubuntu_container" {
-  name  = "ubuntu"
-  image = docker_image.ubuntu_image.image_id
-
+  name  = "ubuntu-container"
+  image = "ubuntu:latest"
+  command = ["sleep", "infinity"]
   ports {
-    internal = 5668
-    external = 5668
+    internal = 56899
+    external = 56899
+  }
+}
+
+resource "docker_container" "debian_container" {
+  name  = "debian-container"
+  image = "debian:latest"
+  command = ["sleep", "infinity"]
+  ports {
+    internal = 8908
+    external = 8908
+  }
+}
+
+
+resource "docker_container" "postgresql_container" {
+  name  = "postgresql-container"
+  image = "postgres:latest"
+  command = ["sleep", "infinity"]
+  ports {
+    internal = 5432
+    external = 5432
+  }
+}
+
+resource "docker_container" "jenkins_container" {
+  name  = "jenkins-container"
+  image = "jenkins/jenkins:lts-jdk11"
+  command = ["sleep", "infinity"]
+  ports {
+    internal = 9090
+    external = 9090
   }
 }
 
   
+
 
