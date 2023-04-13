@@ -104,6 +104,16 @@ resource "docker_container" "jenkins_container" {
   }
 }
 
+#------------------------------------------------------------Terrform-Import-Example----------------------------------------------------------------
+
+# terraform import docker_container.ubuntu_container_2 $(docker inspect --format="{{.ID}}" ubuntu-container-37gjd6)
+
+# resource "docker_container" "ubuntu_container_2" {
+#   name = "ubuntu-container-37gjd6"
+#   image = docker_image.ubuntu_image.name
+  
+# }
+
 #----------------------------------------------------------------Terrform-Output----------------------------------------------------------------
 
 output "ip-address" {
