@@ -109,7 +109,7 @@ output "ip-address-and-ports-jenkins" {
 }
 
 output "ip-address-and-ports-debian" {
-  value = [for i in docker_container.debian_container[*]: join(":",i.network_data[*]["ip_address"], i.ports[*]["external"], i.name[*])]
+  value = [for i in docker_container.debian_container[*]: join(":",i.network_data[*]["ip_address"], i.ports[*]["external"], i.name[*], i.network_data[*]["mac_address"])]
   description = "The IP address and external port of the container"
 }
 
