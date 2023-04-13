@@ -7,6 +7,17 @@ terraform {
   }
 }
 
+resource "docker_image" "nodered_image" {
+  name = "nodered/node-red:latest"
+  
+}
+
+
+resource "docker_image" "ubuntu_image" {
+  name = "ubuntu:latest"
+  
+}
+
 provider "docker" {}
 
 resource "random_string" "random" {
@@ -25,8 +36,7 @@ resource "random_string" "random_2" {
 resource "docker_container" "nodered_container" {
   count = 2
   name  = join("-",["nodered-container", random_string.random_2[count.index].result])
-  image = "nodered/node-red:latest"
-
+  image = docker_image.nodered_image.name
   ports {
     internal = 1880
     #external = 1880 Docker will assign random external port
@@ -35,7 +45,7 @@ resource "docker_container" "nodered_container" {
 
 resource "docker_container" "ubuntu_container" {
   name  = join("-",["ubuntu-container", random_string.random.result])
-  image = "ubuntu:latest"
+  image = docker_image.ubuntu_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = 56899
