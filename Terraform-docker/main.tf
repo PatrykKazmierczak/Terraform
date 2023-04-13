@@ -46,8 +46,8 @@ resource "random_string" "random" {
 }
 
 resource "random_string" "random_2" {
-  count = 2
-  length = 6
+  count = 1
+  length = 7
   special = false
   upper = false
 }
@@ -55,7 +55,7 @@ resource "random_string" "random_2" {
 #------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
 resource "docker_container" "nodered_container" {
-  count = 2
+  count = 1
   name  = join("-",["nodered-container", random_string.random_2[count.index].result])
   image = docker_image.nodered_image.name
   ports {
