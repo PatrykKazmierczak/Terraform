@@ -7,18 +7,37 @@ terraform {
   }
 }
 
+provider "docker" {}
+
+#-------------------------------------------------------------Terraform-Docker-Images----------------------------------------------------------------
+
 resource "docker_image" "nodered_image" {
   name = "nodered/node-red:latest"
   
 }
-
 
 resource "docker_image" "ubuntu_image" {
   name = "ubuntu:latest"
   
 }
 
-provider "docker" {}
+resource "docker_image" "debian_image" {
+  name = "debian:latest"
+  
+}
+
+resource "docker_image" "postgresql_image" {
+  name = "postgres:latest"
+  
+}
+
+resource "docker_image" "jenkins_image" {
+  name = "jenkins/jenkins:lts-jdk11"
+  
+}
+
+#-------------------------------------------------------------Terraform-Random-String----------------------------------------------------------------
+
 
 resource "random_string" "random" {
   length = 6
@@ -32,6 +51,8 @@ resource "random_string" "random_2" {
   special = false
   upper = false
 }
+
+#------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
 resource "docker_container" "nodered_container" {
   count = 2
@@ -55,7 +76,7 @@ resource "docker_container" "ubuntu_container" {
 
 resource "docker_container" "debian_container" {
   name  = join("-",["debian-container", random_string.random.result])
-  image = "debian:latest"
+  image = docker_image.debian_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = 8908
@@ -65,7 +86,7 @@ resource "docker_container" "debian_container" {
 
 resource "docker_container" "postgresql_container" {
   name  = join("-",["postgresql-container", random_string.random.result])
-  image = "postgres:latest"
+  image = docker_image.postgresql_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = 5432
@@ -75,7 +96,7 @@ resource "docker_container" "postgresql_container" {
 
 resource "docker_container" "jenkins_container" {
   name  = join("-",["jenkins-container", random_string.random.result])
-  image = "jenkins/jenkins:lts-jdk11"
+  image = docker_image.jenkins_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = 9090
@@ -83,25 +104,14 @@ resource "docker_container" "jenkins_container" {
   }
 }
 
+#----------------------------------------------------------------Terrform-Output----------------------------------------------------------------
 
-
-# output "Container-Name-Ip-ExternalPort" {
-#   value = join("\n", [
-#     join(": -> ", [docker_container.nodered_container[*].name, docker_container.nodered_container[0].network_data[0].ip_address, docker_container.nodered_container[0].ports[0].external]),
-#     join(": -> ", [docker_container.ubuntu_container[*].name, docker_container.ubuntu_container.network_data[0].ip_address, docker_container.ubuntu_container.ports[0].external]),
-#     join(": -> ", [docker_container.debian_container[*].name, docker_container.debian_container.network_data[0].ip_address, docker_container.debian_container.ports[0].external]),
-#     join(": -> ", [docker_container.postgresql_container[*].name, docker_container.postgresql_container.network_data[0].ip_address, docker_container.postgresql_container.ports[0].external]),
-#     join(": -> ", [docker_container.jenkins_container[*].name, docker_container.jenkins_container.network_data[0].ip_address, docker_container.jenkins_container.ports[0].external])
-#   ])
-#   description = "The names and network data of all containers"
-# }
-
-# output "ip-address" {
-#   value = join("\n ",  flatten([docker_container.nodered_container[*].name, 
-#                       docker_container.nodered_container[*].network_data[*].ip_address,
-#                       docker_container.nodered_container[*].ports[*].external]))
-#   description = "The IP address and external port of the container"
-# }
+output "ip-address" {
+  value = join("\n ",  flatten([docker_container.nodered_container[*].name, 
+                                docker_container.nodered_container[*].network_data[*].ip_address,
+                                docker_container.nodered_container[*].ports[*].external]))
+  description = "The IP address and external port of the container"
+}
 
 output "ip-address-and-ports-nodered" {
   value = [for i in docker_container.nodered_container[*]: join(":",i.network_data[*]["ip_address"], i.ports[*]["external"], i.name[*])]
