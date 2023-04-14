@@ -9,6 +9,23 @@ terraform {
 }
 
 provider docker {}
+#-------------------------------------------------------------Terraform-Docker-Variables----------------------------------------------------------------
+
+variable "ext_port" {
+  type = number
+  default =1880
+}
+
+variable "int_port" {
+  type = number
+  default = 1880
+  
+}
+
+variable "cont_count" {
+  type = number
+  default = 1
+}
 
 #-------------------------------------------------------------Terraform-Docker-Images----------------------------------------------------------------
 
@@ -56,12 +73,12 @@ resource "random_string" "random_2" {
 #------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
 resource "docker_container" "nodered_container" {
-  count = 1
+  count = var.cont_count
   name  = join("-",["nodered-container", random_string.random_2[count.index].result])
   image = docker_image.nodered_image.name
   ports {
-    internal = 1880
-    #external = 1880 Docker will assign random external port
+    internal = var.int_port
+    external = var.ext_port
   }
 }
 
@@ -70,7 +87,7 @@ resource "docker_container" "ubuntu_container" {
   image = docker_image.ubuntu_image.name
   command = ["sleep", "infinity"]
   ports {
-    internal = 56899
+    internal = var.int_port
     #external = 56899 Docker will assign random external port
   }
 }
@@ -80,7 +97,7 @@ resource "docker_container" "debian_container" {
   image = docker_image.debian_image.name
   command = ["sleep", "infinity"]
   ports {
-    internal = 8908
+    internal = var.int_port
     #external = 8908 Docker will assign random external port
   }
 }
@@ -90,7 +107,7 @@ resource "docker_container" "postgresql_container" {
   image = docker_image.postgresql_image.name
   command = ["sleep", "infinity"]
   ports {
-    internal = 5432
+    internal = var.int_port
     #external = 5432 Docker will assign random external port
   }
 }
@@ -100,7 +117,7 @@ resource "docker_container" "jenkins_container" {
   image = docker_image.jenkins_image.name
   command = ["sleep", "infinity"]
   ports {
-    internal = 9090
+    internal = var.int_port
     #external = 9090  Docker will assign random external port
   }
 }
