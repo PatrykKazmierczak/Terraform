@@ -142,6 +142,36 @@ terraform {
 
 provider docker {}
 
+resource "null_resource" "dockervol_1" {
+  provisioner "local-exec" {
+    command = "if not exist noderedvol (mkdir noderedvol)"
+  }
+}
+
+resource "null_resource" "dockervol_2" {
+  provisioner "local-exec" {
+    command = "if not exist noderedvol (mkdir ubuntuvol)"
+  }
+}
+
+resource "null_resource" "dockervol_3" {
+  provisioner "local-exec" {
+    command = "if not exist noderedvol (mkdir debianvol)"
+  }
+}
+
+resource "null_resource" "dockervol_4" {
+  provisioner "local-exec" {
+    command = "if not exist noderedvol (mkdir postgresqlvol)"
+  }
+}
+
+resource "null_resource" "dockervol_5" {
+  provisioner "local-exec" {
+    command = "if not exist noderedvol (mkdir jenkinsvol)"
+  }
+}
+
 #-------------------------------------------------------------Terraform-Docker-Images----------------------------------------------------------------
 
 resource "docker_image" "nodered_image" {
@@ -195,6 +225,10 @@ resource "docker_container" "nodered_container" {
     internal = var.int_port
     external = var.ext_port
   }
+  volumes {
+    container_path = "/data"
+    host_path = "C:/Terraform/Terraform-docker/noderedvol"
+  }
 }
 
 resource "docker_container" "ubuntu_container" {
@@ -204,6 +238,10 @@ resource "docker_container" "ubuntu_container" {
   ports {
     internal = var.int_port
     #external = 56899 Docker will assign random external port
+  }
+  volumes {
+    container_path = "/data"
+    host_path = "C:/Terraform/Terraform-docker/ubuntuvol"
   }
 }
 
@@ -215,6 +253,10 @@ resource "docker_container" "debian_container" {
     internal = var.int_port
     #external = 8908 Docker will assign random external port
   }
+  volumes {
+    container_path = "/data"
+    host_path = "C:/Terraform/Terraform-docker/debianvol"
+  }
 }
 
 resource "docker_container" "postgresql_container" {
@@ -225,6 +267,10 @@ resource "docker_container" "postgresql_container" {
     internal = var.int_port
     #external = 5432 Docker will assign random external port
   }
+  volumes {
+    container_path = "/data"
+    host_path = "C:/Terraform/Terraform-docker/postgresqlvol"
+  }
 }
 
 resource "docker_container" "jenkins_container" {
@@ -234,6 +280,10 @@ resource "docker_container" "jenkins_container" {
   ports {
     internal = var.int_port
     #external = 9090  Docker will assign random external port
+  }
+  volumes {
+    container_path = "/data"
+    host_path = "C:/Terraform/Terraform-docker/jenkinsvol"
   }
 }
 

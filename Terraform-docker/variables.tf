@@ -1,5 +1,6 @@
 variable "ext_port" {
   type = number
+  # sensitive = true
  
 
   validation {

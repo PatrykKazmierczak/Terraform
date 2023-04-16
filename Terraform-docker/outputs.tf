@@ -8,6 +8,7 @@ output "ip-address" {
 output "ip-address-and-ports-nodered" {
   value = [for i in docker_container.nodered_container[*]: join(":",i.network_data[*]["ip_address"], i.ports[*]["external"], i.name[*])]
   description = "The IP address and external port of the container"
+  # sensitive = true
 }
 
 output "ip-address-and-ports-ubuntu" {
