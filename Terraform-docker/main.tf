@@ -209,7 +209,7 @@ resource "random_string" "random" {
 }
 
 resource "random_string" "random_2" {
-  count = 1
+  count = local.container_count
   length = 7
   special = false
   upper = false
@@ -218,12 +218,12 @@ resource "random_string" "random_2" {
 #------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
 resource "docker_container" "nodered_container" {
-  count = var.cont_count
+  count = local.container_count
   name  = join("-",["nodered-container", random_string.random_2[count.index].result])
   image = docker_image.nodered_image.name
   ports {
     internal = var.int_port
-    external = var.ext_port
+    external = var.ext_port[count.index]
   }
   volumes {
     container_path = "/data"
