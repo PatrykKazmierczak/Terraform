@@ -5,6 +5,7 @@
 *.tfstate
 *.tfstate.backup
 *.tfstate.*
+*.tfvars
 
 # Crash log files
 crash.log
