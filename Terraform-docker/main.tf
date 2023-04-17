@@ -227,7 +227,7 @@ resource "docker_container" "nodered_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "C:/Terraform/Terraform-docker/noderedvol"
+    host_path = "${path.cwd}/noderedvol"
   }
 }
 
@@ -241,7 +241,7 @@ resource "docker_container" "ubuntu_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "C:/Terraform/Terraform-docker/ubuntuvol"
+    host_path = "${path.cwd}/ubuntuvol"
   }
 }
 
@@ -255,7 +255,7 @@ resource "docker_container" "debian_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "C:/Terraform/Terraform-docker/debianvol"
+    host_path = "${path.cwd}/debianvol"
   }
 }
 
@@ -269,7 +269,7 @@ resource "docker_container" "postgresql_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "C:/Terraform/Terraform-docker/postgresqlvol"
+    host_path = "${path.cwd}/postgresqlvol"
   }
 }
 
@@ -283,7 +283,7 @@ resource "docker_container" "jenkins_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "C:/Terraform/Terraform-docker/jenkinsvol"
+    host_path = "${path.cwd}/jenkinsvol"
   }
 }
 
