@@ -140,7 +140,13 @@ terraform {
 }
 
 
-provider docker {}
+provider docker {
+  #  registry_auth {
+  #   username = var.docker_hub_username
+  #   password = var.docker_hub_password
+  #   address = "https://index.docker.io/v1/"
+  # }
+}
 
 resource "null_resource" "dockervol_1" {
   provisioner "local-exec" {
@@ -175,27 +181,27 @@ resource "null_resource" "dockervol_5" {
 #-------------------------------------------------------------Terraform-Docker-Images----------------------------------------------------------------
 
 resource "docker_image" "nodered_image" {
-  name = "nodered/node-red:latest"
-  
+  name = lookup(var.image_nodered, var.env)
 }
 
+
 resource "docker_image" "ubuntu_image" {
-  name = "ubuntu:latest"
+  name = lookup(var.image_ubuntu, var.env)
   
 }
 
 resource "docker_image" "debian_image" {
-  name = "debian:latest"
+  name = lookup(var.image_debian, var.env)
   
 }
 
 resource "docker_image" "postgresql_image" {
-  name = "postgres:latest"
+  name = lookup(var.image_postgresql, var.env)
   
 }
 
 resource "docker_image" "jenkins_image" {
-  name = "jenkins/jenkins:lts-jdk11"
+  name = lookup(var.image_jenkins, var.env)
   
 }
 
@@ -208,22 +214,22 @@ resource "random_string" "random" {
   upper = false
 }
 
-resource "random_string" "random_2" {
-  count = local.container_count
-  length = 7
-  special = false
-  upper = false
-}
+# resource "random_string" "random_2" {
+#   count = local.container_count
+#   length = 7
+#   special = false
+#   upper = false
+# }
 
 #------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
 resource "docker_container" "nodered_container" {
   count = local.container_count
-  name  = join("-",["nodered-container", random_string.random_2[count.index].result])
+  name  = join("-",["nodered-container", random_string.random.result])
   image = docker_image.nodered_image.name
   ports {
     internal = var.int_port
-    external = var.ext_port[count.index]
+    # external = lookup(var.ext_port, var.env)[count.index]
   }
   volumes {
     container_path = "/data"
@@ -232,12 +238,13 @@ resource "docker_container" "nodered_container" {
 }
 
 resource "docker_container" "ubuntu_container" {
+  count = local.container_count
   name  = join("-",["ubuntu-container", random_string.random.result])
   image = docker_image.ubuntu_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    #external = 56899 Docker will assign random external port
+    # external = lookup(var.ext_port, var.env)[count.index]
   }
   volumes {
     container_path = "/data"
@@ -246,12 +253,13 @@ resource "docker_container" "ubuntu_container" {
 }
 
 resource "docker_container" "debian_container" {
+  count = local.container_count
   name  = join("-",["debian-container", random_string.random.result])
   image = docker_image.debian_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    #external = 8908 Docker will assign random external port
+    # external = lookup(var.ext_port, var.env)[count.index]
   }
   volumes {
     container_path = "/data"
@@ -260,12 +268,13 @@ resource "docker_container" "debian_container" {
 }
 
 resource "docker_container" "postgresql_container" {
+  count = local.container_count
   name  = join("-",["postgresql-container", random_string.random.result])
   image = docker_image.postgresql_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    #external = 5432 Docker will assign random external port
+    # external = lookup(var.ext_port, var.env)[count.index]
   }
   volumes {
     container_path = "/data"
@@ -274,12 +283,13 @@ resource "docker_container" "postgresql_container" {
 }
 
 resource "docker_container" "jenkins_container" {
+  count = local.container_count
   name  = join("-",["jenkins-container", random_string.random.result])
   image = docker_image.jenkins_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    #external = 9090  Docker will assign random external port
+    # external = lookup(var.ext_port, var.env)[count.index]
   }
   volumes {
     container_path = "/data"
