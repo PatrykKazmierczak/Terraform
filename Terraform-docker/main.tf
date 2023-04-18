@@ -229,7 +229,7 @@ resource "docker_container" "nodered_container" {
   image = docker_image.nodered_image.name
   ports {
     internal = var.int_port
-    # external = lookup(var.ext_port, terraform.workspace)[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
   volumes {
     container_path = "/data"
