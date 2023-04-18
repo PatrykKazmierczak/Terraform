@@ -2,10 +2,10 @@
 **/.terraform/*
 
 # .tfstate files
-*.tfstate
-*.tfstate.backup
-*.tfstate.*
-*.tfvars
+# *.tfstate
+# *.tfstate.backup
+# *.tfstate.*
+# *.tfvars
 
 # Crash log files
 crash.log
