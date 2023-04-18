@@ -80,11 +80,11 @@ variable "int_port" {
 
 variable "cont_count" {
   type = number
-  default = 3
+  default = 1
 }
 
 locals {
-  container_count = length(lookup(var.ext_port, var.env))
+  container_count = length(var.ext_port[terraform.workspace])
 }
 
 # variable "docker_hub_username" {

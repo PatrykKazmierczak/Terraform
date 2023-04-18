@@ -181,27 +181,27 @@ resource "null_resource" "dockervol_5" {
 #-------------------------------------------------------------Terraform-Docker-Images----------------------------------------------------------------
 
 resource "docker_image" "nodered_image" {
-  name = lookup(var.image_nodered, var.env)
+  name = var.image_nodered[terraform.workspace]
 }
 
 
 resource "docker_image" "ubuntu_image" {
-  name = lookup(var.image_ubuntu, var.env)
+  name = var.image_ubuntu[terraform.workspace]
   
 }
 
 resource "docker_image" "debian_image" {
-  name = lookup(var.image_debian, var.env)
+  name = var.image_debian[terraform.workspace]
   
 }
 
 resource "docker_image" "postgresql_image" {
-  name = lookup(var.image_postgresql, var.env)
+  name = var.image_postgresql[terraform.workspace]
   
 }
 
 resource "docker_image" "jenkins_image" {
-  name = lookup(var.image_jenkins, var.env)
+  name = var.image_jenkins[terraform.workspace]
   
 }
 
@@ -225,11 +225,11 @@ resource "random_string" "random" {
 
 resource "docker_container" "nodered_container" {
   count = local.container_count
-  name  = join("-",["nodered-container", random_string.random.result])
+  name  = join("-",["nodered-container", terraform.workspace, random_string.random.result])
   image = docker_image.nodered_image.name
   ports {
     internal = var.int_port
-    # external = lookup(var.ext_port, var.env)[count.index]
+    # external = lookup(var.ext_port, terraform.workspace)[count.index]
   }
   volumes {
     container_path = "/data"
@@ -239,12 +239,12 @@ resource "docker_container" "nodered_container" {
 
 resource "docker_container" "ubuntu_container" {
   count = local.container_count
-  name  = join("-",["ubuntu-container", random_string.random.result])
+  name  = join("-",["ubuntu-container", terraform.workspace, random_string.random.result])
   image = docker_image.ubuntu_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    # external = lookup(var.ext_port, var.env)[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
   volumes {
     container_path = "/data"
@@ -254,12 +254,12 @@ resource "docker_container" "ubuntu_container" {
 
 resource "docker_container" "debian_container" {
   count = local.container_count
-  name  = join("-",["debian-container", random_string.random.result])
+  name  = join("-",["debian-container", terraform.workspace, random_string.random.result])
   image = docker_image.debian_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    # external = lookup(var.ext_port, var.env)[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
   volumes {
     container_path = "/data"
@@ -270,12 +270,12 @@ resource "docker_container" "debian_container" {
 
 resource "docker_container" "postgresql_container" {
   count = local.container_count
-  name  = join("-",["postgresql-container", random_string.random.result])
+  name  = join("-",["postgresql-container", terraform.workspace, random_string.random.result])
   image = docker_image.postgresql_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    # external = lookup(var.ext_port, var.env)[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
   volumes {
     container_path = "/data"
@@ -285,12 +285,12 @@ resource "docker_container" "postgresql_container" {
 
 resource "docker_container" "jenkins_container" {
   count = local.container_count
-  name  = join("-",["jenkins-container", random_string.random.result])
+  name  = join("-",["jenkins-container", terraform.workspace, random_string.random.result])
   image = docker_image.jenkins_image.name
   command = ["sleep", "infinity"]
   ports {
     internal = var.int_port
-    # external = lookup(var.ext_port, var.env)[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
   volumes {
     container_path = "/data"
