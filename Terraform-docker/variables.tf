@@ -1,10 +1,10 @@
 
-variable "env" {
-  type = string
-  description = "Env to deploy to"
-  default = "dev"
+# variable "env" {
+#   type = string
+#   description = "Env to deploy to"
+#   default = "dev"
   
-}
+# }
 
 variable "image_nodered" {
   type = map
