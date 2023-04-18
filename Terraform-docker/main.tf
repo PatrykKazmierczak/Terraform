@@ -267,6 +267,7 @@ resource "docker_container" "debian_container" {
   }
 }
 
+
 resource "docker_container" "postgresql_container" {
   count = local.container_count
   name  = join("-",["postgresql-container", random_string.random.result])
