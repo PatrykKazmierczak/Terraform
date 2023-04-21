@@ -15,41 +15,41 @@ variable "image" {
   }
 }
 
-variable "image_ubuntu" {
-  type = map
-  description = "image for container"
-  default = {
-    dev = "ubuntu:latest"
-    prod = "ubuntu:latest-minimal"
-  }
-}
+# variable "image_ubuntu" {
+#   type = map
+#   description = "image for container"
+#   default = {
+#     dev = "ubuntu:latest"
+#     prod = "ubuntu:latest-minimal"
+#   }
+# }
 
-variable "image_debian" {
-  type = map
-  description = "image for container"
-  default = {
-    dev = "debian:latest"
-    prod = "debian:latest-minimal"
-  }
-}
+# variable "image_debian" {
+#   type = map
+#   description = "image for container"
+#   default = {
+#     dev = "debian:latest"
+#     prod = "debian:latest-minimal"
+#   }
+# }
 
-variable "image_postgresql" {
-  type = map
-  description = "image for container"
-  default = {
-    dev = "postgres:latest"
-    prod = "postgres:latest-minimal"
-  }
-}
+# variable "image_postgresql" {
+#   type = map
+#   description = "image for container"
+#   default = {
+#     dev = "postgres:latest"
+#     prod = "postgres:latest-minimal"
+#   }
+# }
 
-variable "image_jenkins" {
-  type = map
-  description = "image for container"
-  default = {
-    dev = "jenkins/jenkins:lts-jdk11"
-    prod = "jenkins/jenkins:lts-jdk11-minimal"
-  }
-}
+# variable "image_jenkins" {
+#   type = map
+#   description = "image for container"
+#   default = {
+#     dev = "jenkins/jenkins:lts-jdk11"
+#     prod = "jenkins/jenkins:lts-jdk11-minimal"
+#   }
+# }
 
 
 variable "ext_port" {
