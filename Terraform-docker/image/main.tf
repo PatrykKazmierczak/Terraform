@@ -1,6 +1,6 @@
-# resource "docker_image" "nodered_image" {
-#   name = var.image_in
-# }
+resource "docker_image" "nodered_image" {
+  name = var.image_in
+}
 
 
 # resource "docker_image" "ubuntu_image" {

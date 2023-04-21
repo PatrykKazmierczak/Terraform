@@ -1,7 +1,7 @@
 
-# output "image_out" {
-#   value = docker_image.nodered_image.name
-# }
+output "image_out" {
+  value = docker_image.nodered_image.name
+}
 
 # output "image_out_2" {
 #   value = docker_image.ubuntu_image.name
