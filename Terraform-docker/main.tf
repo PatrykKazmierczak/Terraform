@@ -50,29 +50,29 @@ resource "random_string" "random_1" {
   upper = false
 }
 
-resource "random_string" "random_2" {
-  length = 6
-  special = false
-  upper = false
-}
+# resource "random_string" "random_2" {
+#   length = 6
+#   special = false
+#   upper = false
+# }
 
-resource "random_string" "random_3" {
-  length = 6
-  special = false
-  upper = false
-}
+# resource "random_string" "random_3" {
+#   length = 6
+#   special = false
+#   upper = false
+# }
 
-resource "random_string" "random_4" {
-  length = 6
-  special = false
-  upper = false
-}
+# resource "random_string" "random_4" {
+#   length = 6
+#   special = false
+#   upper = false
+# }
 
-resource "random_string" "random_5" {
-  length = 6
-  special = false
-  upper = false
-}
+# resource "random_string" "random_5" {
+#   length = 6
+#   special = false
+#   upper = false
+# }
 
 # ------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
