@@ -4,35 +4,35 @@
 
 
 
-resource "null_resource" "dockervol_1" {
-  provisioner "local-exec" {
-    command = "if not exist noderedvol (mkdir noderedvol)"
-  }
-}
+# resource "null_resource" "dockervol_1" {
+#   provisioner "local-exec" {
+#     command = "if not exist noderedvol (mkdir noderedvol)"
+#   }
+# }
 
-resource "null_resource" "dockervol_2" {
-  provisioner "local-exec" {
-    command = "if not exist noderedvol (mkdir ubuntuvol)"
-  }
-}
+# resource "null_resource" "dockervol_2" {
+#   provisioner "local-exec" {
+#     command = "if not exist noderedvol (mkdir ubuntuvol)"
+#   }
+# }
 
-resource "null_resource" "dockervol_3" {
-  provisioner "local-exec" {
-    command = "if not exist noderedvol (mkdir debianvol)"
-  }
-}
+# resource "null_resource" "dockervol_3" {
+#   provisioner "local-exec" {
+#     command = "if not exist noderedvol (mkdir debianvol)"
+#   }
+# }
 
-resource "null_resource" "dockervol_4" {
-  provisioner "local-exec" {
-    command = "if not exist noderedvol (mkdir postgresqlvol)"
-  }
-}
+# resource "null_resource" "dockervol_4" {
+#   provisioner "local-exec" {
+#     command = "if not exist noderedvol (mkdir postgresqlvol)"
+#   }
+# }
 
-resource "null_resource" "dockervol_5" {
-  provisioner "local-exec" {
-    command = "if not exist noderedvol (mkdir jenkinsvol)"
-  }
-}
+# resource "null_resource" "dockervol_5" {
+#   provisioner "local-exec" {
+#     command = "if not exist noderedvol (mkdir jenkinsvol)"
+#   }
+# }
 
 # -------------------------------------------------------------Terraform-Docker-Module----------------------------------------------------------------
 
