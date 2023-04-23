@@ -1,47 +1,34 @@
 
-
-# -------------------------------------------------------------Terraform-Docker----------------------------------------------------------------
-
-
-
-# resource "null_resource" "dockervol_1" {
-#   provisioner "local-exec" {
-#     command = "if not exist noderedvol (mkdir noderedvol)"
-#   }
-# }
-
-# resource "null_resource" "dockervol_2" {
-#   provisioner "local-exec" {
-#     command = "if not exist noderedvol (mkdir ubuntuvol)"
-#   }
-# }
-
-# resource "null_resource" "dockervol_3" {
-#   provisioner "local-exec" {
-#     command = "if not exist noderedvol (mkdir debianvol)"
-#   }
-# }
-
-# resource "null_resource" "dockervol_4" {
-#   provisioner "local-exec" {
-#     command = "if not exist noderedvol (mkdir postgresqlvol)"
-#   }
-# }
-
-# resource "null_resource" "dockervol_5" {
-#   provisioner "local-exec" {
-#     command = "if not exist noderedvol (mkdir jenkinsvol)"
-#   }
-# }
-
-# -------------------------------------------------------------Terraform-Docker-Module----------------------------------------------------------------
-
-module "image" {
+module "nodered_image" {
   source = "./image"
-  image_in = var.image[terraform.workspace]
+  image_in = var.image["nodered"][terraform.workspace]
 }
 
-# -------------------------------------------------------------Terraform-Random-String----------------------------------------------------------------
+module "ubuntu_image" {
+  source = "./image"
+  image_in = var.image["ubuntu"][terraform.workspace]
+}
+
+module "grafana_image" {
+  source = "./image"
+  image_in = var.image["grafana"][terraform.workspace]
+}
+
+module "jenkins_image" {
+  source = "./image"
+  image_in = var.image["jenkins"][terraform.workspace]
+}
+
+module "postgres_image" {
+  source = "./image"
+  image_in = var.image["postgres"][terraform.workspace]
+}
+
+module "debian_image" {
+  source = "./image"
+  image_in = var.image["debian"][terraform.workspace]
+}
+
 
 
 resource "random_string" "random_1" {
@@ -50,56 +37,36 @@ resource "random_string" "random_1" {
   upper = false
 }
 
-# resource "random_string" "random_2" {
-#   length = 6
-#   special = false
-#   upper = false
-# }
-
-# resource "random_string" "random_3" {
-#   length = 6
-#   special = false
-#   upper = false
-# }
-
-# resource "random_string" "random_4" {
-#   length = 6
-#   special = false
-#   upper = false
-# }
-
-# resource "random_string" "random_5" {
-#   length = 6
-#   special = false
-#   upper = false
-# }
-
 # ------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
 module "container" {
   source = "./container"
   count = local.container_count
-  name_in  = join("-",["nodered-container", terraform.workspace, random_string.random_1.result])
-  image_in = module.image.image_out
+  name_in  = join("-",["nodered_container", terraform.workspace, random_string.random_1.result])
+  image_in = module.nodered_image.image_out
   int_port_in= var.int_port
   ext_port_in = var.ext_port[terraform.workspace][count.index]
   container_path_in = "/data"
-  host_path_in = "${path.cwd}/noderedvol"
 }
 
-# resource "docker_container" "ubuntu_container" {
+# module "container" {
+#   source = "./container"
 #   count = local.container_count
-#   name  = join("-",["ubuntu-container", terraform.workspace, random_string.random_2.result])
-#   image = module.image.image_out_2
-#   command = ["sleep", "infinity"]
-#   ports {
-#     internal = var.int_port
-#     # external = var.ext_port[terraform.workspace][count.index]
-#   }
-#   volumes {
-#     container_path = "/data"
-#     host_path = "${path.cwd}/ubuntuvol"
-#   }
+#   name_in  = join("-",["ubuntu_container", terraform.workspace, random_string.random_1.result])
+#   image_in = module.ubuntu_image.image_out
+#   int_port_in= var.int_port
+#   ext_port_in = var.ext_port[terraform.workspace][count.index]
+#   container_path_in = "/data"
+# }
+
+# module "container" {
+#   source = "./container"
+#   count = local.container_count
+#   name_in  = join("-",["grafana_container", terraform.workspace, random_string.random_1.result])
+#   image_in = module.grafana_image.image_out
+#   int_port_in= var.int_port
+#   ext_port_in = var.ext_port[terraform.workspace][count.index]
+#   container_path_in = "/data"
 # }
 
 # resource "docker_container" "debian_container" {

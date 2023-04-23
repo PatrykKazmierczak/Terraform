@@ -1,57 +1,34 @@
 
-# variable "env" {
-#   type = string
-#   description = "Env to deploy to"
-#   default = "dev"
-  
-# }
-
 variable "image" {
   type = map
   description = "image for container"
   default = {
+  nodered = {
     dev = "nodered/node-red:latest"
     prod = "nodered/node-green:latest-minimal"
   }
+  ubuntu = {
+    dev = "ubuntu:latest"
+    prod = "ubuntu:latest-minimal"
+  }
+  grafana = {
+    dev = "grafana/grafana:latest"
+    prod = "grafana/grafana:latest-minimal"
+  }
+  postgres = {
+    dev = "postgres:latest"
+    prod = "postgres:latest-minimal"
+  }
+  debian = {
+    dev = "debian:latest"
+    prod = "debian:latest-minimal"
+  }
+  jenkins = {
+    dev = "jenkins/jenkins:lts-jdk11"
+    prod = "jenkins/jenkins:lts-jdk11-minimal"
+  }
 }
-
-# variable "image_ubuntu" {
-#   type = map
-#   description = "image for container"
-#   default = {
-#     dev = "ubuntu:latest"
-#     prod = "ubuntu:latest-minimal"
-#   }
-# }
-
-# variable "image_debian" {
-#   type = map
-#   description = "image for container"
-#   default = {
-#     dev = "debian:latest"
-#     prod = "debian:latest-minimal"
-#   }
-# }
-
-# variable "image_postgresql" {
-#   type = map
-#   description = "image for container"
-#   default = {
-#     dev = "postgres:latest"
-#     prod = "postgres:latest-minimal"
-#   }
-# }
-
-# variable "image_jenkins" {
-#   type = map
-#   description = "image for container"
-#   default = {
-#     dev = "jenkins/jenkins:lts-jdk11"
-#     prod = "jenkins/jenkins:lts-jdk11-minimal"
-#   }
-# }
-
-
+}
 variable "ext_port" {
   type = map
   sensitive = true
