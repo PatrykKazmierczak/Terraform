@@ -76,19 +76,15 @@ resource "random_string" "random_1" {
 
 # ------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
-resource "docker_container" "nodered_container" {
+module "container" {
+  source = "./container"
   count = local.container_count
-  name  = join("-",["nodered-container", terraform.workspace, random_string.random_1.result])
-  image = module.image.image_out
-  command = ["sleep", "infinity"]
-  ports {
-    internal = var.int_port
-    external = var.ext_port[terraform.workspace][count.index]
-  }
-  volumes {
-    container_path = "/data"
-    host_path = "${path.cwd}/noderedvol"
-  }
+  name_in  = join("-",["nodered-container", terraform.workspace, random_string.random_1.result])
+  image_in = module.image.image_out
+  int_port_in= var.int_port
+  ext_port_in = var.ext_port[terraform.workspace][count.index]
+  container_path_in = "/data"
+  host_path_in = "${path.cwd}/noderedvol"
 }
 
 # resource "docker_container" "ubuntu_container" {
