@@ -5,7 +5,7 @@ locals {
       
       container_count = length(var.ext_port["nodered"][terraform.workspace])
       image = var.image["nodered"][terraform.workspace]
-      int = 1881
+      int = 1880
       ext = var.ext_port["nodered"][terraform.workspace]
       container_path = "/data"
     }
@@ -19,22 +19,24 @@ locals {
     grafana = {
       container_count = length(var.ext_port["grafana"][terraform.workspace])
       image = var.image["grafana"][terraform.workspace]
-      int = 1981
+      int = 3000
       ext = var.ext_port["grafana"][terraform.workspace]
       container_path = "/data"
     }
+    prometheus = {
+      container_count = length(var.ext_port["prometheus"][terraform.workspace])
+      image = var.image["prometheus"][terraform.workspace]
+      int = 9090
+      ext = var.ext_port["prometheus"][terraform.workspace]
+      container_path = "/data"
   }
 }
-
 
 module "image" {
   source = "./image"
   for_each = local.deployment
   image_in = each.value.image
 }
-
-
-
 
 # ------------------------------------------------------------Terraform-Docker-Container----------------------------------------------------------------
 
