@@ -2,47 +2,48 @@
 locals {
   deployment = {
     nodered = {
-      image = var.image["nodered"]["terraform.workspace"]
+      image = var.image["nodered"][terraform.workspace]
     }
     ubuntu = {
-      image = var.image["ubuntu"]["terraform.workspace"]
+      image = var.image["ubuntu"][terraform.workspace]
     }
     grafana = {
-      image = var.image["grafana"]["terraform.workspace"]
+      image = var.image["grafana"][terraform.workspace]
     }
   }
 }
 
 
-module "nodered_image" {
+module "image" {
   source = "./image"
-  image_in = var.image["nodered"][terraform.workspace]
+  for_each = local.deployment
+  image_in = each.value.image
 }
 
-module "ubuntu_image" {
-  source = "./image"
-  image_in = var.image["ubuntu"][terraform.workspace]
-}
+# module "ubuntu_image" {
+#   source = "./image"
+#   image_in = var.image["ubuntu"][terraform.workspace]
+# }
 
-module "grafana_image" {
-  source = "./image"
-  image_in = var.image["grafana"][terraform.workspace]
-}
+# module "grafana_image" {
+#   source = "./image"
+#   image_in = var.image["grafana"][terraform.workspace]
+# }
 
-module "jenkins_image" {
-  source = "./image"
-  image_in = var.image["jenkins"][terraform.workspace]
-}
+# module "jenkins_image" {
+#   source = "./image"
+#   image_in = var.image["jenkins"][terraform.workspace]
+# }
 
-module "postgres_image" {
-  source = "./image"
-  image_in = var.image["postgres"][terraform.workspace]
-}
+# module "postgres_image" {
+#   source = "./image"
+#   image_in = var.image["postgres"][terraform.workspace]
+# }
 
-module "debian_image" {
-  source = "./image"
-  image_in = var.image["debian"][terraform.workspace]
-}
+# module "debian_image" {
+#   source = "./image"
+#   image_in = var.image["debian"][terraform.workspace]
+# }
 
 
 
@@ -57,8 +58,8 @@ resource "random_string" "random_1" {
 module "container" {
   source = "./container"
   count = local.container_count
-  name_in  = join("-",["nodered_container", terraform.workspace, random_string.random_1.result])
-  image_in = module.nodered_image.image_out
+  name_in  = join("-",["nodered", terraform.workspace, random_string.random_1.result])
+  image_in = module.image["nodered"].image_out
   int_port_in= var.int_port
   ext_port_in = var.ext_port[terraform.workspace][count.index]
   container_path_in = "/data"
