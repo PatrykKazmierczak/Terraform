@@ -27,6 +27,10 @@ variable "image" {
     dev = "jenkins/jenkins:lts-jdk11"
     prod = "jenkins/jenkins:lts-jdk11-minimal"
   }
+  prometheus = {
+    dev = "prom/prometheus:latest"
+    prod = "prom/prometheus:latest-minimal"
+  }
 }
 }
 variable "ext_port" {

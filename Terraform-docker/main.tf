@@ -1,8 +1,7 @@
 
 locals {
   deployment = {
-    nodered = {
-      
+    nodered = {    
       container_count = length(var.ext_port["nodered"][terraform.workspace])
       image = var.image["nodered"][terraform.workspace]
       int = 1880
@@ -29,6 +28,7 @@ locals {
       int = 9090
       ext = var.ext_port["prometheus"][terraform.workspace]
       container_path = "/data"
+    }
   }
 }
 
