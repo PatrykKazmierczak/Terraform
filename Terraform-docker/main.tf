@@ -1,4 +1,19 @@
 
+locals {
+  deployment = {
+    nodered = {
+      image = var.image["nodered"]["terraform.workspace"]
+    }
+    ubuntu = {
+      image = var.image["ubuntu"]["terraform.workspace"]
+    }
+    grafana = {
+      image = var.image["grafana"]["terraform.workspace"]
+    }
+  }
+}
+
+
 module "nodered_image" {
   source = "./image"
   image_in = var.image["nodered"][terraform.workspace]
