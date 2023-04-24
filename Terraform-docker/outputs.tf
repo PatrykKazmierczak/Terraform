@@ -30,3 +30,8 @@
 #   value = [for i in docker_container.postgresql_container[*]: join(":",i.network_data[*]["ip_address"], i.ports[*]["external"], i.name[*], i.network_data[*]["mac_address"])]
 #   description = "The IP address and external port of the container"
 # }
+
+output "application_access" {
+  value = [for x in module.container[*]: x]
+  description = "The name and socket for each application"
+}

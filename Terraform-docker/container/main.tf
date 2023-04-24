@@ -5,11 +5,11 @@ resource "random_string" "random" {
   upper = false
 }
 
-resource "docker_container" "nodered_container" {
+resource "docker_container" "app_container" {
   count = var.count_in
   name  = join("-",[var.name_in, terraform.workspace, random_string.random[count.index].result])
   image = var.image_in
-  command = ["sleep", "infinity"]
+  # command = ["sleep", "infinity"]
   ports {
     internal = var.int_port_in
     external = var.ext_port_in[count.index]
@@ -25,5 +25,14 @@ resource "docker_volume" "container_volume" {
   name = "${var.name_in}-${random_string.random[count.index].result}-volume"
   lifecycle {
     prevent_destroy = false
+  }
+  provisioner "local-exec" {
+    when = destroy
+    command = "mkdir C:\\Terraform\\Terraform-docker\\backup"
+    on_failure = continue
+  }
+  provisioner "local-exec" {
+    when = destroy
+    command = "mkdir C:\\Terraform\\Terraform-docker\\backup"
   }
 }

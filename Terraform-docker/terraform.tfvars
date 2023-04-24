@@ -8,8 +8,8 @@ ext_port = {
     prod = [1881]
   }
   ubuntu = {
-    dev = [3500]
-    prod = [3501]
+    dev = [25636]
+    prod = [25636]
   }
   prometheus = {
     dev = [9090]

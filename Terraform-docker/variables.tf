@@ -28,8 +28,8 @@ variable "image" {
     prod = "jenkins/jenkins:lts-jdk11-minimal"
   }
   prometheus = {
-    dev = "prom/prometheus:latest"
-    prod = "prom/prometheus:latest-minimal"
+    dev = "prom/prometheus"
+    prod = "prom/prometheus"
   }
 }
 }
