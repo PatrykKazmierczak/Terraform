@@ -4,7 +4,7 @@ locals {
     nodered = {    
       container_count = length(var.ext_port["nodered"][terraform.workspace])
       image = var.image["nodered"][terraform.workspace]
-      int = 1880
+      int = 5005
       ext = var.ext_port["nodered"][terraform.workspace]
       container_path = "/var/lib/docker/volumes/"
     }

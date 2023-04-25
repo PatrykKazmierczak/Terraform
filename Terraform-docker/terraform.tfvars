@@ -1,8 +1,8 @@
 ext_port = {
 
   nodered = {
-    dev = [1880]
-    prod = [1881]
+    dev = [5005]
+    prod = [5006]
   }
   ubuntu = {
     dev = [7070]
