@@ -26,13 +26,16 @@ resource "docker_volume" "container_volume" {
   lifecycle {
     prevent_destroy = false
   }
+
   provisioner "local-exec" {
-    when = destroy
-    command = "mkdir C:\\Terraform\\Terraform-docker\\backup"
-    on_failure = continue
+  when = destroy
+  command = "mkdir C:\\Terraform\\backup"
+  on_failure = continue
   }
+
   provisioner "local-exec" {
-    when = destroy
-    command = "mkdir C:\\Terraform\\Terraform-docker\\backup"
-  }
+  when = destroy
+  command = "powershell Compress-Archive -Path '${self.mountpoint}\\*' -DestinationPath 'C:\\Terraform\\backup\\${self.name}\\${self.name}.zip'"
+  on_failure = fail
+}
 }
