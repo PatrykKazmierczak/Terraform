@@ -27,9 +27,15 @@ resource "docker_volume" "container_volume" {
     prevent_destroy = false
   }
 
-    provisioner "local-exec" {
+# provisioner "local-exec" {
+#   when = destroy
+#   command = "mkdir C:\\Terraform\\backup"
+#   on_failure = continue
+#   }
+
+provisioner "local-exec" {
   when = destroy
-  command = "mkdir C:\\Terraform\\backup"
+  command = "C:\\Terraform\\backup"
   on_failure = continue
-  }
+}
 }
