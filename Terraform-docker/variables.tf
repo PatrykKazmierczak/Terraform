@@ -47,16 +47,16 @@ variable "ext_port" {
 #   }
 # }
 
-variable "int_port" {
-  type = number
-  default = 1880
+# variable "int_port" {
+#   type = number
+#   default = 1880
 
-  validation {
-      condition = var.int_port == 1880
-      error_message = "The internal port must be 1880"
-  }
+#   validation {
+#       condition = var.int_port == 1880
+#       error_message = "The internal port must be 1880"
+#   }
   
-}
+# }
 
 variable "cont_count" {
   type = number
