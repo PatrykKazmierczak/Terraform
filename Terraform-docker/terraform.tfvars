@@ -1,23 +1,23 @@
 ext_port = {
 
   nodered = {
-    dev = [5005]
-    prod = [5006]
+    dev = [1880]
+    prod = [1800]
   }
   ubuntu = {
     dev = [7070]
-    prod = [7071]
+    prod = [7070]
   }
   prometheus = {
     dev = [9090]
-    prod = [9091]
+    prod = [9090]
   }
    grafana = {
     dev = [3000]
-    prod = [3001]
+    prod = [3000]
   }
   debian = {
     dev = [4050]
-    prod = [4051]
+    prod = [4050]
   }
 }
