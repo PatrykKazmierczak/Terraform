@@ -9,7 +9,7 @@ resource "docker_container" "app_container" {
   count = var.count_in
   name  = join("-",[var.name_in, terraform.workspace, random_string.random[count.index].result])
   image = var.image_in
-  command = ["sleep", "infinity"]
+  # command = ["sleep","infinity"]
   ports {
     internal = var.int_port_in
     external = var.ext_port_in[count.index]
@@ -26,16 +26,10 @@ resource "docker_volume" "container_volume" {
   lifecycle {
     prevent_destroy = false
   }
-
-#   provisioner "local-exec" {
+  
+# provisioner "local-exec" {
 #   when = destroy
-#   command = "mkdir C:\\Terraform\\backup"
+#   command = "mkdir -p C:\\Terraform\\backup"
 #   on_failure = continue
-#   }
-
-#   provisioner "local-exec" {
-#   when = destroy
-#   command = "powershell Compress-Archive -Path '${self.mountpoint}\\*' -DestinationPath 'C:\\Terraform\\backup\\${self.name}\\${self.name}.zip'"
-#   on_failure = fail
 # }
 }
