@@ -17,6 +17,7 @@ locals {
     #   ext = var.ext_port["ubuntu"][terraform.workspace]
     #   container_path = "/data"
     # }
+    
     grafana = {
       container_count = length(var.ext_port["grafana"][terraform.workspace])
       image = var.image["grafana"][terraform.workspace]
