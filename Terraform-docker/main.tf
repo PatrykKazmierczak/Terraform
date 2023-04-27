@@ -29,13 +29,13 @@ locals {
       ext = var.ext_port["prometheus"][terraform.workspace]
       container_path = "/var/lib/docker/volumes/"
     }
-    debian = {
-      container_count = length(var.ext_port["debian"][terraform.workspace])
-      image = var.image["debian"][terraform.workspace]
-      int = 4050
-      ext = var.ext_port["debian"][terraform.workspace]
-      container_path = "/var/lib/docker/volumes/"
-    }
+    # debian = {
+    #   container_count = length(var.ext_port["debian"][terraform.workspace])
+    #   image = var.image["debian"][terraform.workspace]
+    #   int = 4050
+    #   ext = var.ext_port["debian"][terraform.workspace]
+    #   container_path = "/var/lib/docker/volumes/"
+    # }
   }
 }
 

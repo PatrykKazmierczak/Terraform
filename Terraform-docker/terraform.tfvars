@@ -16,8 +16,5 @@ ext_port = {
     dev = [3000]
     prod = [3001]
   }
-  debian = {
-    dev = [4050]
-    prod = [4051]
-  }
+
 }
