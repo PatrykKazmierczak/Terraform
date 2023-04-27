@@ -35,6 +35,17 @@ locals {
         {container_path_each = "/data"}
       ]
     }
+
+    # prometheus_windows_exporter = {
+    #   container_count = length(var.ext_port["prometheus_windows_exporter"][terraform.workspace])
+    #   image = var.image["prometheus_windows_exporter"][terraform.workspace]
+    #   int = 9182
+    #   ext = var.ext_port["prometheus_windows_exporter"][terraform.workspace]
+    #   volumes = [
+    #     {container_path_each = "C:/Program Files/Prometheus/exporters"},{container_path_each = "C:/Program Files/Prometheus/data"}  
+    #   ]  
+    # }
+
     # debian = {
     #   container_count = length(var.ext_port["debian"][terraform.workspace])
     #   image = var.image["debian"][terraform.workspace]
