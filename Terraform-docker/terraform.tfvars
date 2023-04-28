@@ -20,4 +20,8 @@ ext_port = {
     dev = [4050]
     prod = [4050]
   }
+  influxdb = {
+    dev = [8086]
+    prod = [8086]
+  }
 }

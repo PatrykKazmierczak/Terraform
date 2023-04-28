@@ -28,10 +28,22 @@ locals {
       int = 3000
       ext = var.ext_port["grafana"][terraform.workspace]
       volumes = [
-        {container_path_each = "/var/lib/grafana"},
-        {container_path_each = "/etc/grafana"}
+        {container_path_each = "/data"},
+        {container_path_each = "/data"}
       ]
     }
+
+    influxdb = {
+      container_count = length(var.ext_port["influxdb"][terraform.workspace])
+      image = var.image["influxdb"][terraform.workspace]
+      int = 8086
+      ext = var.ext_port["influxdb"][terraform.workspace]
+      volumes = [
+        {container_path_each = "/var/lib/influxdb"},
+        {container_path_each = "/etc/influxdb"}      
+      ]
+    }
+
     prometheus = {
       container_count = length(var.ext_port["prometheus"][terraform.workspace])
       image = var.image["prometheus"][terraform.workspace]

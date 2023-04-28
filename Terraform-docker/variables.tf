@@ -4,16 +4,16 @@ variable "image" {
   description = "image for container"
   default = {
   nodered = {
-    dev = "nodered/node-red:latest"
-    prod = "nodered/node-green:latest-minimal"
+    dev = "nodered/node-red"
+    prod = "nodered/node-red"
   }
   ubuntu = {
     dev = "ubuntu:latest"
     prod = "ubuntu:latest-minimal"
   }
   grafana = {
-    dev = "grafana/grafana:latest"
-    prod = "grafana/grafana:latest-minimal"
+    dev = "grafana/grafana"
+    prod = "grafana/grafana"
   }
   postgres = {
     dev = "postgres:latest"
@@ -30,6 +30,10 @@ variable "image" {
   prometheus = {
     dev = "prom/prometheus"
     prod = "prom/prometheus"
+  }
+  influxdb = {
+    dev = "influxdb"
+    prod = "influxdb"
   }
 }
 }
