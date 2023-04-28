@@ -7,7 +7,8 @@ locals {
       int = 1880
       ext = var.ext_port["nodered"][terraform.workspace]
       volumes = [
-        {container_path_each = "/data"}
+        {container_path_each = "/var/lib/nodered"},
+        {container_path_each = "/etc/nodered"}
       ]
     }
     # ubuntu = {
@@ -15,7 +16,10 @@ locals {
     #   image = var.image["ubuntu"][terraform.workspace]
     #   int = 7070
     #   ext = var.ext_port["ubuntu"][terraform.workspace]
-    #   container_path = "/data"
+    #   volumes = [
+      #   {container_path_each = "/var/lib/ubuntu"},
+      #   {container_path_each = "/etc/ubuntu"}
+      # ]
     # }
     
     grafana = {
@@ -24,7 +28,8 @@ locals {
       int = 3000
       ext = var.ext_port["grafana"][terraform.workspace]
       volumes = [
-        {container_path_each = "/data"}
+        {container_path_each = "/var/lib/grafana"},
+        {container_path_each = "/etc/grafana"}
       ]
     }
     prometheus = {
@@ -33,7 +38,8 @@ locals {
       int = 9090
       ext = var.ext_port["prometheus"][terraform.workspace]
       volumes = [
-        {container_path_each = "/data"}
+        {container_path_each = "/var/lib/prometheus"},
+        {container_path_each = "/etc/prometheus"}
       ]
     }
 
@@ -43,8 +49,9 @@ locals {
     #   int = 9182
     #   ext = var.ext_port["prometheus_windows_exporter"][terraform.workspace]
     #   volumes = [
-    #     {container_path_each = "C:/Program Files/Prometheus/exporters"},{container_path_each = "C:/Program Files/Prometheus/data"}  
-    #   ]  
+      #   {container_path_each = "/var/lib/prometheus_windows_exporter"},
+      #   {container_path_each = "/etc/prometheus_windows_exporter"}
+      # ]
     # }
 
     # debian = {
@@ -52,7 +59,10 @@ locals {
     #   image = var.image["debian"][terraform.workspace]
     #   int = 4050
     #   ext = var.ext_port["debian"][terraform.workspace]
-    #   container_path = "/data"
+    #   volumes = [
+      #   {container_path_each = "/var/lib/debian"},
+      #   {container_path_each = "/etc/debian"}
+      # ]
     # }
   }
 }
