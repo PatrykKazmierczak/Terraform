@@ -28,8 +28,8 @@ locals {
       int = 3000
       ext = var.ext_port["grafana"][terraform.workspace]
       volumes = [
-        {container_path_each = "/data"},
-        {container_path_each = "/data"}
+        {container_path_each = "/var/lib/grafana"},
+        {container_path_each = "/etc/grafana"}
       ]
     }
 
@@ -55,6 +55,18 @@ locals {
       ]
     }
 
+    portainer = {
+      container_count = length(var.ext_port["portainer"][terraform.workspace])
+      image = var.image["portainer"][terraform.workspace]
+      int = 9000
+      ext = var.ext_port["portainer"][terraform.workspace]
+      volumes = [
+        {container_path_each = "/var/lib/portainer"},
+        {container_path_each = "/etc/portainer"}
+      ]
+    }
+
+    
     # prometheus_windows_exporter = {
     #   container_count = length(var.ext_port["prometheus_windows_exporter"][terraform.workspace])
     #   image = var.image["prometheus_windows_exporter"][terraform.workspace]

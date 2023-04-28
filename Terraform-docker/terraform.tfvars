@@ -24,4 +24,8 @@ ext_port = {
     dev = [8086]
     prod = [8086]
   }
+  portainer = {
+    dev = [9000]
+    prod = [9000]
+  }
 }

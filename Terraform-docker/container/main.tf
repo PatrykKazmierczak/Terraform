@@ -27,10 +27,22 @@ resource "docker_container" "app_container" {
   # command = "echo ${self.name}: ${self.ip_address}:${join("", [for x in self.ports[*]["external"]: x])} >> containers.txt"
   # }
 
-  # provisioner "local-exec" {
-  # when = destroy
-  # command = "rm -f containers.txt"
-  # }
+  provisioner "local-exec" {
+  when = destroy
+  command = "rm -f containers.txt"
+  }
+
+  provisioner "local-exec" {
+  when = destroy
+  command = "mkdir ${path.cwd}/../backup/"
+  on_failure = continue
+
+  }
+  provisioner "local-exec" {
+  when = destroy
+  command = "sudo tar -czvf ${path.cwd}/../backup/${self.name}.tar.gz"
+  on_failure = fail
+  }
   
 }
 
@@ -42,16 +54,7 @@ resource "docker_volume" "container_volume" {
   }
 }
 
-# provisioner "local-exec" {
-#   when = destroy
-#   command = "mkdir ${path.cwd}/../backup/"
-#   on_failure = continue
-# }
-# provisioner "local-exec" {
-#   when = destroy
-#   command = "sudo tar -czvf ${path.cwd}/../backup/${self.name}.tar.gz ${self.mountpoint}/"
-#   on_failure = fail
-# }
+
 
 
 

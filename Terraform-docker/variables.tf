@@ -35,6 +35,10 @@ variable "image" {
     dev = "influxdb"
     prod = "influxdb"
   }
+  portainer = {
+    dev = "portainer/portainer"
+    prod = "portainer/portainer"
+  }
 }
 }
 variable "ext_port" {
