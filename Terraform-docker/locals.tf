@@ -49,10 +49,10 @@ locals {
       image = var.image["prometheus"][terraform.workspace]
       int = 9090
       ext = var.ext_port["prometheus"][terraform.workspace]
-      volumes = [
-        {container_path_each = "/var/lib/prometheus"},
-        {container_path_each = "/etc/prometheus"}
-      ]
+      # volumes = [
+      #   {container_path_each = "/var/lib/prometheus"},
+      #   {container_path_each = "/etc/prometheus"}
+      # ]
     }
 
     portainer = {
