@@ -9,12 +9,12 @@ ext_port = {
     prod = [7070]
   }
   prometheus = {
-    dev = [9090]
-    prod = [9090]
+    dev = [9091]
+    prod = [9091]
   }
    grafana = {
-    dev = [3000]
-    prod = [3000]
+    dev = [3001]
+    prod = [3001]
   }
   debian = {
     dev = [4050]
