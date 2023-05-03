@@ -55,16 +55,16 @@ locals {
       ]
     }
 
-    portainer = {
-      container_count = length(var.ext_port["portainer"][terraform.workspace])
-      image = var.image["portainer"][terraform.workspace]
-      int = 9000
-      ext = var.ext_port["portainer"][terraform.workspace]
-      volumes = [
-        {container_path_each = "/var/lib/portainer"},
-        {container_path_each = "/etc/portainer"}
-      ]
-    }
+    # portainer = {
+    #   container_count = length(var.ext_port["portainer"][terraform.workspace])
+    #   image = var.image["portainer"][terraform.workspace]
+    #   int = 9000
+    #   ext = var.ext_port["portainer"][terraform.workspace]
+    #   volumes = [
+    #     {container_path_each = "/var/lib/portainer"},
+    #     {container_path_each = "/etc/portainer"}
+    #   ]
+    # }
 
     
     # prometheus_windows_exporter = {
