@@ -4,16 +4,16 @@ variable "image" {
   description = "image for container"
   default = {
   nodered = {
-    dev = "nodered/node-red:latest"
-    prod = "nodered/node-green:latest-minimal"
+    dev = "nodered/node-red"
+    prod = "nodered/node-red"
   }
   ubuntu = {
     dev = "ubuntu:latest"
     prod = "ubuntu:latest-minimal"
   }
   grafana = {
-    dev = "grafana/grafana:latest"
-    prod = "grafana/grafana:latest-minimal"
+    dev = "grafana/grafana"
+    prod = "grafana/grafana"
   }
   postgres = {
     dev = "postgres:latest"
@@ -31,6 +31,14 @@ variable "image" {
     dev = "prom/prometheus"
     prod = "prom/prometheus"
   }
+  influxdb = {
+    dev = "influxdb"
+    prod = "influxdb"
+  }
+  portainer = {
+    dev = "portainer/portainer"
+    prod = "portainer/portainer"
+  }
 }
 }
 variable "ext_port" {
@@ -47,16 +55,16 @@ variable "ext_port" {
 #   }
 # }
 
-variable "int_port" {
-  type = number
-  default = 1880
+# variable "int_port" {
+#   type = number
+#   default = 1880
 
-  validation {
-      condition = var.int_port == 1880
-      error_message = "The internal port must be 1880"
-  }
+#   validation {
+#       condition = var.int_port == 1880
+#       error_message = "The internal port must be 1880"
+#   }
   
-}
+# }
 
 variable "cont_count" {
   type = number
