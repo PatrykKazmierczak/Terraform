@@ -1,6 +1,6 @@
 # Project Title
 Badges
-tests, DOI, compliance with community standards
+tests, DOI, compliance with community standards/f
 
 # Description
 one short paragraph about your project’s goal and context
