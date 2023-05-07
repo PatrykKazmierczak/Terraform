@@ -11,6 +11,7 @@ locals {
         {container_path_each = "/etc/nodered"}
       ]
     }
+    
     # ubuntu = {
     #   container_count = length(var.ext_port["ubuntu"][terraform.workspace])
     #   image = var.image["ubuntu"][terraform.workspace]
