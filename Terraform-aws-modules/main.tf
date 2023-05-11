@@ -1,7 +1,7 @@
 # module "s3_bucket" {
-#     source = "./s3_bucket"
+#     source = "./modules/s3_bucket"
 # }
 
 module "vpc" {
-    source = "./vpc"
+    source = "./modules/vpc"
 }
