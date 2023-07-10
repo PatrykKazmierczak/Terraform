@@ -14,7 +14,7 @@ resource "aws_vpc" "dev_vpc" {
 }
 
 resource "aws_subnet" "dev_public_subnet" {
-    count = length(var.public_cidrs)
+    count = var.public_sn_count
     vpc_id = aws_vpc.dev_vpc.id
     cidr_block = var.public_cidrs[count.index]
     map_public_ip_on_launch = true
@@ -22,5 +22,17 @@ resource "aws_subnet" "dev_public_subnet" {
 
     tags = {
         Name = "dev_public_${count.index + 1}"
+    }
+}
+
+resource "aws_subnet" "dev_private_subnet" {
+    count = var.private_sn_count
+    vpc_id = aws_vpc.dev_vpc.id
+    cidr_block = var.private_cidrs[count.index]
+    map_public_ip_on_launch = false
+    availability_zone = ["eu-central-1a", "eu-central-1b", "eu-central-1c"][count.index]
+
+    tags = {
+        Name = "dev_private_${count.index + 1}"
     }
 }
