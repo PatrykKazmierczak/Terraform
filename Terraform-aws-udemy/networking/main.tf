@@ -50,3 +50,11 @@ resource "aws_subnet" "dev_private_subnet" {
         Name = "dev_private_${count.index + 1}"
     }
 }
+
+resource "aws_route_table" "dev_public_rt" {
+  vpc_id = aws_vpc.dev_vpc.id
+
+  tags = {
+    Name = "dev_public_route_table"
+  }
+}
